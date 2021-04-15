@@ -6,6 +6,9 @@ import schedule
 from dotenv import find_dotenv, load_dotenv
 from envparse import env
 
+from utils.logging import init_logger, logger
+
+init_logger()
 
 load_dotenv(find_dotenv(".env"))
 
@@ -16,11 +19,13 @@ MOUNT_PATH: str = env.str("MOUNT_PATH")
 
 
 def send_alarm_warning(space_left):
-    print(f"WARNING: Only {space_left:.2f} GB left!")
+    #print(f"WARNING: Only {space_left:.2f} GB left!")
+    logger.warning(f"Only {space_left:.2f} GB left!")
 
 
 def send_alarm_error(space_left):
-    print(f"ERROR: Only {space_left:.2f} GB left!")
+    #print(f"ERROR: Only {space_left:.2f} GB left!")
+    logger.error(f"Only {space_left:.2f} GB left!")
 
 
 def check_hdd():
@@ -31,7 +36,8 @@ def check_hdd():
     elif free_gb <= SPACE_LIMIT_ERROR:
         send_alarm_error(free_gb)
     else:
-        print(f"{free_gb:.2f} GB are free")
+        #print(f"{free_gb:.2f} GB are free")
+        logger.info(f"{free_gb:.2f} GB are free")
 
 
 schedule.every(CHECK_PERIOD).seconds.do(check_hdd)
