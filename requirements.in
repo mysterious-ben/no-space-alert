@@ -1,6 +1,8 @@
 black
+envparse
 flake8
 isort
 pre-commit
 psutil
+python-dotenv
 schedule
