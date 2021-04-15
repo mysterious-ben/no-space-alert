@@ -6,7 +6,7 @@ from pathlib import Path
 from logutil import get_loguru_logger, init_loguru
 
 
-ROOT_PATH: Path = Path(__file__).absolute().parent.parent
+ROOT_PATH: Path = Path(__file__).absolute().parent.parent.parent
 
 
 def init_logger():
@@ -17,7 +17,7 @@ def init_logger():
         ),
         level="DEBUG",
         file_on=True,
-        file_path=ROOT_PATH / "logs",
+        file_path=ROOT_PATH / "logs" / "logs",
         file_fmt=(
             f"dev-local-avenon "
             + "{time:YYYY-MM-DDTHH:mm:ss.SSS!UTC}Z {name} {level}: {message}"
