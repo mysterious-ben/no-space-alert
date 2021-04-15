@@ -30,3 +30,8 @@ MOUNT_PATH=/
 ```bash
 pip install -r venv_requirements.txt
 ```
+
+### Run script
+```bash
+python src/main.py
+```
