@@ -15,7 +15,6 @@ mypy-extensions==0.4.3
 nodeenv==1.6.0
 pathspec==0.8.1
 pip==21.0.1
-pkg-resources==0.0.0
 pre-commit==2.12.0
 psutil==5.8.0
 pycodestyle==2.7.0

@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "/home/nameless/dev/vfenv/no-space-alert/bin/python",
+    "python.formatting.provider": "black"
+}
