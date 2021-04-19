@@ -8,3 +8,4 @@ pytest
 python-dotenv
 schedule
 logutil[all]
+pip-tools
