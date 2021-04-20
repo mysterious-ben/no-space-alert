@@ -1,11 +1,6 @@
 black
-envparse
 flake8
 isort
 pre-commit
-psutil
 pytest
-python-dotenv
-schedule
-logutil[all]
 pip-tools

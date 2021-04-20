@@ -7,12 +7,10 @@ project:
 	@echo $(PROJECT)
 
 # --- Pip requiremets
-freeze-requirements:
-	pip freeze > requirements-dev.txt
+pip-freeze:
 	pip-compile requirements.in
-install-requirements-prod:
-	pip install -r requirements.txt
-install-requirements-dev:
+	pip-compile requirements.in requirements-dev.in --output-file requirements-dev.txt
+pip-install-dev:
 	pip install -r requirements-dev.txt
 
 # --- Linting
