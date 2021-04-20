@@ -7,11 +7,11 @@ load_dotenv(find_dotenv(".env"))
 UNIQUE_ID: str = env.str("UNIQUE_ID")
 
 # --- Alarms
-SPACE_LIMIT_WARNING: int = env.int("SPACE_LIMIT_WARNING")
-SPACE_LIMIT_ERROR: int = env.int("SPACE_LIMIT_ERROR")
-SPACE_LIMIT_WARNING_INODE: int = env.int("SPACE_LIMIT_WARNING_INODE")
-SPACE_LIMIT_ERROR_INODE: int = env.int("SPACE_LIMIT_ERROR_INODE")
-CHECK_PERIOD: int = env.int("CHECK_PERIOD")
+FREE_SPACE_PCT_WARNING: float = env.float("FREE_SPACE_PCT_WARNING")
+FREE_SPACE_PCT_ERROR: float = env.float("FREE_SPACE_PCT_ERROR")
+FREE_INODE_PCT_WARNING: float = env.float("FREE_INODE_PCT_WARNING")
+FREE_INODE_PCT_ERROR: float = env.float("FREE_INODE_PCT_ERROR")
+CHECK_PERIOD_SECONDS: int = env.int("CHECK_PERIOD_SECONDS")
 MOUNT_PATH: str = env.str("MOUNT_PATH")
 
 # --- Pushover ---

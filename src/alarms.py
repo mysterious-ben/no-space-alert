@@ -10,50 +10,57 @@ from src.log import init_logger, logger
 init_logger()
 
 
-def send_alarm_warning(space_left):
-    logger.warning(f"Only {space_left:.2f} GB left!")
+def send_alarm_warning(gb_left: float, space_pct_left: float):
+    logger.warning(f"Only {gb_left:.2f}GB ({space_pct_left:.1f}%) left!")
 
 
-def send_alarm_error(space_left):
-    logger.error(f"Only {space_left:.2f} GB left!")
+def send_alarm_error(space_left: float, space_pct_left: float):
+    logger.error(f"Only {space_left:.2f}GB ({space_pct_left:.1f}%) left!")
 
 
-def send_alarm_warning_inode(inode_left):
-    logger.warning(f"{inode_left:.0f} percents inode is used")
+def send_alarm_warning_inode(inode_left: int, inode_pct_left: float):
+    logger.warning(f"Only {inode_left:,} inodes ({inode_pct_left:.1f}%) left!")
 
 
-def send_alarm_error_inode(inode_left):
-    logger.error(f"{inode_left:.0f} percents inode is used")
+def send_alarm_error_inode(inode_left: int, inode_pct_left: float):
+    logger.error(f"Only {inode_left:,} inodes ({inode_pct_left:.1f}%) left!")
 
 
 def check_hdd():
+    # Get disk space
+    hdd = psutil.disk_usage(config.MOUNT_PATH)
+    free_space = hdd.free / (1024 * 1024 * 1024)
+    total_space = hdd.total / (1024 * 1024 * 1024)
+    free_space_pct = free_space / total_space * 100
+
+    # Get disk inodes
     inode_hdd_mount = os.statvfs(config.MOUNT_PATH)
     total_inode = inode_hdd_mount.f_files  # inodes
     free_inode = inode_hdd_mount.f_ffree  # free inodes
-    used_inode = total_inode - free_inode  # used inodes
-    inode_used_percentage = used_inode * 100 / total_inode
-    hdd = psutil.disk_usage(config.MOUNT_PATH)
-    free_gb = hdd.free / (1024 * 1024 * 1024)
-    if (free_gb > config.SPACE_LIMIT_ERROR) and (free_gb <= config.SPACE_LIMIT_WARNING):
-        send_alarm_warning(free_gb)
-    elif free_gb <= config.SPACE_LIMIT_ERROR:
-        send_alarm_error(free_gb)
-    else:
-        logger.info(f"{free_gb:.2f} GB are free")
-    if (inode_used_percentage < config.SPACE_LIMIT_ERROR_INODE) and (
-        inode_used_percentage >= config.SPACE_LIMIT_WARNING_INODE
+    free_inode_pct = free_inode / total_inode * 100
+
+    # Log and alert
+    logger.info(
+        f"Space left: {free_space:.2f}GB ({free_space_pct:.1f}%) | inodes {free_inode:,} ({free_inode_pct:.1f}%)"
+    )
+
+    if (free_space <= config.FREE_SPACE_PCT_WARNING) and (
+        free_space > config.FREE_SPACE_PCT_ERROR
     ):
-        send_alarm_warning_inode(inode_used_percentage)
-    elif inode_used_percentage >= config.SPACE_LIMIT_ERROR_INODE:
-        send_alarm_error_inode(inode_used_percentage)
-    else:
-        logger.info(
-            f"Total inode is {total_inode}. Used inode is {used_inode}. Percents used inode is {inode_used_percentage:.0f}%"
-        )
+        send_alarm_warning(free_space)
+    elif free_space <= config.FREE_SPACE_PCT_ERROR:
+        send_alarm_error(free_space)
+
+    if (free_inode_pct <= config.FREE_INODE_PCT_WARNING) and (
+        free_inode_pct > config.FREE_INODE_PCT_ERROR
+    ):
+        send_alarm_warning_inode(free_inode_pct)
+    elif free_inode_pct <= config.FREE_INODE_PCT_ERROR:
+        send_alarm_error_inode(free_inode_pct)
 
 
 def start():
-    schedule.every(config.CHECK_PERIOD).seconds.do(check_hdd)
+    schedule.every(config.CHECK_PERIOD_SECONDS).seconds.do(check_hdd)
 
     while True:
         schedule.run_pending()
