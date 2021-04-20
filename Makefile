@@ -1,4 +1,4 @@
-PROJECT := tesla-feeds
+PROJECT := no-space-alert
 python_entry := python -m src.cli
 
 default:project

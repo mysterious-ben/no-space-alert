@@ -18,8 +18,8 @@ make start
 ```
 
 ### In a docker
-1. Create and fill in `.env` file
-2. ...
+1. build docker image: `docker build -t no-space-alert .`
+2. docker run: `docker run -it no-space-alert make start`
 
 ## Development
 In a new virtual environment:
