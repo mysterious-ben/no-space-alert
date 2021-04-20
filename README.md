@@ -14,8 +14,14 @@ pip install -r requirements.txt
 ```
 4. Run script
 ```bash
-python -m src.cli start
+make start
 ```
 
-## In a docker
-...
+### In a docker
+1. Create and fill in `.env` file
+2. ...
+
+### Development
+In a new virtual environment:
+- Install dependencies with `make pip-install-dev`
+- If packages are updated, update dependencies with `make pip-freeze`
