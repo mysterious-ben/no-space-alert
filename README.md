@@ -21,7 +21,7 @@ make start
 1. Create and fill in `.env` file
 2. ...
 
-### Development
+## Development
 In a new virtual environment:
 - Install dependencies with `make pip-install-dev`
 - If packages are updated, update dependencies with `make pip-freeze`
