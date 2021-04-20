@@ -12,16 +12,12 @@ ROOT_PATH: Path = Path(__file__).absolute().parent.parent.parent
 
 def init_logger():
     init_loguru(
-        fmt=(
-            f"{config.UNIQUE_ID} "
-            + "{time:YYYY-MM-DDTHH:mm:ss.SSS!UTC}Z {name} {level}: {message}"
-        ),
+        fmt=(f"{config.UNIQUE_ID} " + "{time:YYYY-MM-DDTHH:mm:ss.SSS!UTC}Z {level}: {message}"),
         level="DEBUG",
         file_on=True,
         file_path=ROOT_PATH / "logs" / "logs",
         file_fmt=(
-            f"{config.UNIQUE_ID} "
-            + "{time:YYYY-MM-DDTHH:mm:ss.SSS!UTC}Z {name} {level}: {message}"
+            f"{config.UNIQUE_ID} " + "{time:YYYY-MM-DDTHH:mm:ss.SSS!UTC}Z {level}: {message}"
         ),
         file_rotation="50 MB",
         file_retention=1,
