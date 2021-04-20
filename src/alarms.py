@@ -47,16 +47,16 @@ def check_hdd():
     if (free_space <= config.FREE_SPACE_PCT_WARNING) and (
         free_space > config.FREE_SPACE_PCT_ERROR
     ):
-        send_alarm_warning(free_space)
+        send_alarm_warning(free_space, free_space_pct)
     elif free_space <= config.FREE_SPACE_PCT_ERROR:
-        send_alarm_error(free_space)
+        send_alarm_error(free_space, free_space_pct)
 
     if (free_inode_pct <= config.FREE_INODE_PCT_WARNING) and (
         free_inode_pct > config.FREE_INODE_PCT_ERROR
     ):
-        send_alarm_warning_inode(free_inode_pct)
+        send_alarm_warning_inode(free_inode_pct, free_inode_pct)
     elif free_inode_pct <= config.FREE_INODE_PCT_ERROR:
-        send_alarm_error_inode(free_inode_pct)
+        send_alarm_error_inode(free_inode_pct, free_inode_pct)
 
 
 def start():
