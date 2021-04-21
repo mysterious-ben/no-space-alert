@@ -60,8 +60,16 @@ def check_hdd():
 
 
 def start():
+    logger.critical("free disk monitoring service started")
     schedule.every(config.CHECK_PERIOD_SECONDS).seconds.do(check_hdd)
-
-    while True:
-        schedule.run_pending()
-        time.sleep(0.1)
+    try:
+        while True:
+            schedule.run_pending()
+            time.sleep(0.1)
+    except (KeyboardInterrupt, SystemExit) as e:
+        logger.debug(repr(e))
+    except Exception as e:
+        logger.error(repr(e))
+    finally:
+        logger.critical("free disk monitoring service ended")
+        time.sleep(5)

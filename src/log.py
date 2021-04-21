@@ -15,7 +15,7 @@ def init_logger():
         fmt=(f"{config.UNIQUE_ID} " + "{time:YYYY-MM-DDTHH:mm:ss.SSS!UTC}Z {level}: {message}"),
         level="DEBUG",
         file_on=True,
-        file_path=ROOT_PATH / "logs" / "logs",
+        file_path=ROOT_PATH / "logs" / "logs.log",
         file_fmt=(
             f"{config.UNIQUE_ID} " + "{time:YYYY-MM-DDTHH:mm:ss.SSS!UTC}Z {level}: {message}"
         ),

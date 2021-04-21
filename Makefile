@@ -26,3 +26,16 @@ lint: isort black flake8
 # --- Run scripts (in a virtual environment)
 start:
 	$(python_entry) start
+logs:
+	cat logs/logs.log | tail -n 10
+
+# --- Run scripts in a docker container
+compose-down:
+	docker-compose down --remove-orphans
+compose-build:
+	docker-compose build
+compose-up:
+	docker-compose up -d
+compose-start: compose-down compose-build compose-up
+compose-logs:
+	docker-compose logs --tail 10

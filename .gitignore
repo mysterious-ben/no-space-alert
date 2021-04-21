@@ -130,3 +130,7 @@ dmypy.json
 
 ## IDEs
 .idea
+
+## generated
+temp/
+logs/

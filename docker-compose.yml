@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  no-space-alert:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    image: no-space-alert:latest
+    init: true
+    volumes:
+      - ./logs:/app/logs
+    command: ["start"]
+
+# networks:
+#   default:
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 172.16.58.2/24

@@ -1,0 +1,32 @@
+# Project
+.github/
+.git
+.gitignore
+.dockerignore
+pyproject.toml
+.python-version
+poetry.lock
+.flake8
+.isort.cfg
+.pre-commit-config.yaml
+Makefile
+README.md
+docker-compose.yml
+Dockerfile
+.env.dist
+
+# IDE
+.vscode/
+.idea/
+
+# Python cache
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+.mypy_cache/
+.pytest_cache/
+
+# Application-generated data
+logs/
+temp/
