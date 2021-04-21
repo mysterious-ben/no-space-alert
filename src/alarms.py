@@ -65,7 +65,7 @@ def start():
     try:
         while True:
             schedule.run_pending()
-            time.sleep(0.1)
+            time.sleep(0.5)
     except (KeyboardInterrupt, SystemExit) as e:
         logger.debug(repr(e))
     except Exception as e:
