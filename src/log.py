@@ -1,13 +1,10 @@
 """
 Provides functions to create loggers.
 """
-from pathlib import Path
 
 from logutil import get_loguru_logger, init_loguru
 
 from src import config
-
-ROOT_PATH: Path = Path(__file__).absolute().parent.parent.parent
 
 
 def init_logger():
@@ -15,7 +12,7 @@ def init_logger():
         fmt=(f"{config.UNIQUE_ID} " + "{time:YYYY-MM-DDTHH:mm:ss.SSS!UTC}Z {level}: {message}"),
         level="DEBUG",
         file_on=True,
-        file_path=ROOT_PATH / "logs" / "logs.log",
+        file_path=config.ROOT_PATH / "logs" / "logs.log",
         file_fmt=(
             f"{config.UNIQUE_ID} " + "{time:YYYY-MM-DDTHH:mm:ss.SSS!UTC}Z {level}: {message}"
         ),

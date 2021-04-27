@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from dotenv import find_dotenv, load_dotenv
 from envparse import env
 
@@ -22,3 +24,6 @@ PUSHOVER_TOKEN: str = env.str("PUSHOVER_TOKEN")
 # --- Sentry ---
 SENTRY_ON: bool = env.bool("SENTRY_ON")
 SENTRY_DSN: str = env.str("SENTRY_DSN")
+
+# --- Paths ---
+ROOT_PATH: Path = Path(__file__).absolute().parent.parent
