@@ -26,7 +26,7 @@ lint: isort black flake8
 # --- Run scripts (in a virtual environment)
 start:
 	$(python_entry) start
-logs:
+show-logs: 
 	cat logs/logs.log | tail -n 10
 
 # --- Run scripts in a docker container
