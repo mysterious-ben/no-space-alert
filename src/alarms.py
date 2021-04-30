@@ -44,11 +44,11 @@ def check_hdd():
         f"Space left: {free_space:.2f}GB ({free_space_pct:.1f}%) | inodes {free_inode:,} ({free_inode_pct:.1f}%)"
     )
 
-    if (free_inode_pct <= config.FREE_SPACE_PCT_WARNING) and (
-        free_inode_pct > config.FREE_SPACE_PCT_ERROR
+    if (free_space_pct <= config.FREE_SPACE_PCT_WARNING) and (
+        free_space_pct > config.FREE_SPACE_PCT_ERROR
     ):
         send_alarm_warning(free_space, free_space_pct)
-    elif free_inode_pct <= config.FREE_SPACE_PCT_ERROR:
+    elif free_space_pct <= config.FREE_SPACE_PCT_ERROR:
         send_alarm_error(free_space, free_space_pct)
 
     if (free_inode_pct <= config.FREE_INODE_PCT_WARNING) and (
