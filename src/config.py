@@ -24,6 +24,10 @@ PUSHOVER_USER: str = env.str("PUSHOVER_USER")
 PUSHOVER_TOKEN: str = env.str("PUSHOVER_TOKEN")
 
 # --- Sentry ---
+SLACK_ON: bool = env.bool("SLACK_ON")
+SLACK_WEBHOOK_URL: str = env.str("SLACK_WEBHOOK_URL")
+
+# --- Sentry ---
 SENTRY_ON: bool = env.bool("SENTRY_ON")
 SENTRY_DSN: str = env.str("SENTRY_DSN")
 

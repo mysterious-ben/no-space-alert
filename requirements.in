@@ -2,4 +2,4 @@ envparse
 psutil
 python-dotenv
 schedule
-logutil[all]
+logutil[all]==0.1.5
