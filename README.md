@@ -4,7 +4,8 @@ A very simple hardware monitoring tool
 ## How to run
 ### In a virtual environment
 1. Create an `.env` file with `cp .env.dist .env`
-  - List all mount paths to monitor in `MOUNT_PATHS=` (comma-separated)
+  - List mount paths to monitor in `MOUNT_PATHS=` (comma-separated)
+  - List file systems to monitor in `FILE_SYSTEMS=` (comma-separated; only used if `MOUNT_PATHS` is empty)
   - (Optional) Set credentials for Pushover and Sentry
 
 2. Create and activate a virtual environment

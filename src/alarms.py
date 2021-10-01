@@ -63,7 +63,21 @@ def _check_hdd(mount_path: str):
 
 
 def check_hdds():
-    for mount_path in config.MOUNT_PATHS:
+    if len(config.MOUNT_PATHS) > 0:
+        mount_paths = config.MOUNT_PATHS
+    else:
+        if len(config.FILE_SYSTEMS) > 0:
+            fs_set = set(config.FILE_SYSTEMS)
+            mount_paths = [
+                p.mountpoint for p in psutil.disk_partitions(all=False) if p.fstype in fs_set
+            ]
+        else:
+            mount_paths = [p.mountpoint for p in psutil.disk_partitions(all=False)]
+    if len(mount_paths) > 0:
+        logger.debug(f"monitoring {mount_paths}...")
+    else:
+        logger.warning("no disks to monitor!")
+    for mount_path in mount_paths:
         _check_hdd(mount_path)
 
 

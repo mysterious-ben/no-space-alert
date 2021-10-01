@@ -16,6 +16,7 @@ FREE_INODE_PCT_WARNING: float = env.float("FREE_INODE_PCT_WARNING")
 FREE_INODE_PCT_ERROR: float = env.float("FREE_INODE_PCT_ERROR")
 CHECK_PERIOD_SECONDS: int = env.int("CHECK_PERIOD_SECONDS")
 MOUNT_PATHS: List[str] = env.list("MOUNT_PATHS", subcast=str)
+FILE_SYSTEMS: List[str] = env.list("FILE_SYSTEMS", subcast=str)
 
 # --- Pushover ---
 PUSHOVER_ON: bool = env.bool("PUSHOVER_ON")
