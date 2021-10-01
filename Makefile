@@ -10,8 +10,6 @@ project:
 pip-freeze:
 	pip-compile requirements.in
 	pip-compile requirements.in requirements-dev.in --output-file requirements-dev.txt
-pip-install-dev:
-	pip install -r requirements-dev.txt
 
 # --- Linting
 isort:

@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import List
 
 from dotenv import find_dotenv, load_dotenv
 from envparse import env
@@ -14,7 +15,7 @@ FREE_SPACE_PCT_ERROR: float = env.float("FREE_SPACE_PCT_ERROR")
 FREE_INODE_PCT_WARNING: float = env.float("FREE_INODE_PCT_WARNING")
 FREE_INODE_PCT_ERROR: float = env.float("FREE_INODE_PCT_ERROR")
 CHECK_PERIOD_SECONDS: int = env.int("CHECK_PERIOD_SECONDS")
-MOUNT_PATH: str = env.str("MOUNT_PATH")
+MOUNT_PATHS: List[str] = env.list("MOUNT_PATHS", subcast=str)
 
 # --- Pushover ---
 PUSHOVER_ON: bool = env.bool("PUSHOVER_ON")
