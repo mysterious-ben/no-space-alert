@@ -16,11 +16,16 @@ FREE_INODE_PCT_WARNING: float = env.float("FREE_INODE_PCT_WARNING")
 FREE_INODE_PCT_ERROR: float = env.float("FREE_INODE_PCT_ERROR")
 CHECK_PERIOD_SECONDS: int = env.int("CHECK_PERIOD_SECONDS")
 MOUNT_PATHS: List[str] = env.list("MOUNT_PATHS", subcast=str)
+FILE_SYSTEMS: List[str] = env.list("FILE_SYSTEMS", subcast=str)
 
 # --- Pushover ---
 PUSHOVER_ON: bool = env.bool("PUSHOVER_ON")
 PUSHOVER_USER: str = env.str("PUSHOVER_USER")
 PUSHOVER_TOKEN: str = env.str("PUSHOVER_TOKEN")
+
+# --- Sentry ---
+SLACK_ON: bool = env.bool("SLACK_ON")
+SLACK_WEBHOOK_URL: str = env.str("SLACK_WEBHOOK_URL")
 
 # --- Sentry ---
 SENTRY_ON: bool = env.bool("SENTRY_ON")

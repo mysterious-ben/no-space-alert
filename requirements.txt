@@ -22,7 +22,7 @@ jsonschema==3.2.0
     # via notifiers
 loguru==0.5.3
     # via logutil
-logutil[all]==0.1.3
+logutil[all]==0.1.5
     # via -r requirements.in
 notifiers==1.2.1
     # via logutil
