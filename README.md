@@ -4,7 +4,7 @@ A very simple hardware monitoring tool
 ## How to run
 ### In a virtual environment
 1. Create an `.env` file with `cp .env.dist .env`
-  - List mount paths to monitor in `MOUNT_PATHS=` (comma-separated)
+  - List paths to monitor in `MOUNT_PATHS=` (comma-separated)
   - List file systems to monitor in `FILE_SYSTEMS=` (comma-separated; only used if `MOUNT_PATHS` is empty)
   - (Optional) Set credentials for Pushover, Slack and Sentry
 
@@ -14,6 +14,7 @@ A very simple hardware monitoring tool
 
 ### In a docker
 1. Create and fill in `.env` file (see above)
+  - Also set paths in `DOCKER_MOUNT_PATH_{N}=` to make them visible to docker (apart from `/`)
 2. build docker image: `docker build -t no-space-alert .`
 3. docker run: `docker run -it no-space-alert make start`
 

@@ -10,11 +10,15 @@ services:
     init: true
     volumes:
       - ./logs:/app/logs
+      - ${DOCKER_MOUNT_PATH_0:-/dev/null}:${DOCKER_MOUNT_PATH_0:-/mnt/mount_0}:ro
+      - ${DOCKER_MOUNT_PATH_1:-/dev/null}:${DOCKER_MOUNT_PATH_1:-/mnt/mount_1}:ro
+      - ${DOCKER_MOUNT_PATH_2:-/dev/null}:${DOCKER_MOUNT_PATH_2:-/mnt/mount_2}:ro
     command: ["start"]
 
-# networks:
-#   default:
-#     driver: bridge
-#     ipam:
-#       config:
-#         - subnet: 172.16.58.2/24
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        # - subnet: 10.10.1.0/24
+        - subnet: 172.15.0.0/16
