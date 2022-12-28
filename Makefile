@@ -34,6 +34,6 @@ dc-build:
 	docker-compose build
 dc-up:
 	docker-compose up -d
-dc-compose: compose-down compose-build compose-up
+dc-compose: dc-down dc-build dc-up
 dc-logs:
 	docker-compose logs --tail 10
