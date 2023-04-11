@@ -1,6 +1,9 @@
 # no-space-alert
 A simple monitoring tool for hard drive space and RAM
 
+## Installation
+Clone this GitHub repository.
+
 ## How to run
 ### In a virtual environment
 1. Create an `.env` file with `cp .env.dist .env`
