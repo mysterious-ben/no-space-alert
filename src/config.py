@@ -25,6 +25,7 @@ MAX_DELAY_SECONDS: int = env.int("MAX_DELAY_SECONDS")
 MIN_DELAY_SECONDS: int = env.int("MIN_DELAY_SECONDS")
 MOUNT_PATHS: List[str] = env.list("MOUNT_PATHS", subcast=str)
 FILE_SYSTEMS: List[str] = env.list("FILE_SYSTEMS", subcast=str)
+LOG_ROTATION: str = env.str("LOG_ROTATION")
 
 # --- Pushover ---
 PUSHOVER_ON: bool = env.bool("PUSHOVER_ON")

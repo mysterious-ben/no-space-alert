@@ -16,7 +16,7 @@ def init_logger():
         file_fmt=(
             f"{config.UNIQUE_ID} " + "{time:YYYY-MM-DDTHH:mm:ss.SSS!UTC}Z {level}: {message}"
         ),
-        file_rotation="50 MB",
+        file_rotation=config.LOG_ROTATION,
         file_retention=1,
         pushover_on=config.PUSHOVER_ON,
         pushover_user=config.PUSHOVER_USER,
