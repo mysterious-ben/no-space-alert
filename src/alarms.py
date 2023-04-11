@@ -194,17 +194,17 @@ def report_hdds():
 
 def report_ram():
     # logger.debug("report ram load...")
-    virtual = psutil.virtual_memory()
+    vm = psutil.virtual_memory()
     swap = psutil.swap_memory()
     ram_reporters["ram"].report_level(
-        level=(virtual.total - virtual.available) / virtual.total * 100,
-        swap_used_pct=swap.used / swap.total * 100,
-        vm_available_gb=virtual.available / (1024**3),
-        vm_free_gb=virtual.free / (1024**3),
-        vm_used_gb=virtual.used / (1024**3),
-        vm_cached_gb=virtual.cached / (1024**3),
-        vm_buffers_gb=virtual.buffers / (1024**3),
-        vm_total_gb=virtual.total / (1024**3),
+        level=(vm.total - vm.available) / vm.total * 100 if vm.total > 0 else 0,
+        swap_used_pct=swap.used / swap.total * 100 if swap.total > 0 else 0,
+        vm_available_gb=vm.available / (1024**3),
+        vm_free_gb=vm.free / (1024**3),
+        vm_used_gb=vm.used / (1024**3),
+        vm_cached_gb=vm.cached / (1024**3),
+        vm_buffers_gb=vm.buffers / (1024**3),
+        vm_total_gb=vm.total / (1024**3),
         swap_used_gb=swap.used / (1024**3),
         swap_free_gb=swap.free / (1024**3),
         swap_total_gb=swap.total / (1024**3),
