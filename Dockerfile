@@ -1,4 +1,4 @@
-FROM python:3.8.6-slim-buster
+FROM python:3.8.10-slim-buster
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 WORKDIR /app
 COPY . /app

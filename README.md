@@ -1,5 +1,5 @@
 # no-space-alert
-A very simple hardware monitoring tool
+A simple monitoring tool for hard drive space and RAM
 
 ## How to run
 ### In a virtual environment
