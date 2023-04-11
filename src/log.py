@@ -18,6 +18,7 @@ def init_logger():
         ),
         file_rotation=config.LOG_ROTATION,
         file_retention=1,
+        file_level=config.LOG_FILE_LEVEL,
         pushover_on=config.PUSHOVER_ON,
         pushover_user=config.PUSHOVER_USER,
         pushover_token=config.PUSHOVER_TOKEN,
