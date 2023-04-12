@@ -147,10 +147,10 @@ def init_hdd_reporters() -> None:
 def init_ram_reporters() -> None:
     logger.debug("init monitoring ram")
     ram_reporters["ram"] = Reporter(
-        warning_level=config.HDD_INODE_PCT_WARNING,
-        error_level=config.HDD_INODE_PCT_ERROR,
-        warning_inc=config.HDD_WARNING_INC,
-        error_inc=config.HDD_ERROR_INC,
+        warning_level=config.RAM_PCT_WARNING,
+        error_level=config.RAM_PCT_ERROR,
+        warning_inc=config.RAM_WARNING_INC,
+        error_inc=config.RAM_ERROR_INC,
         alarm_time_interval=config.MAX_DELAY_SECONDS,
         msg_time_interval=config.MIN_DELAY_SECONDS,
         msg_template=(
