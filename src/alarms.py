@@ -34,18 +34,21 @@ class Reporter:
         error_inc: float,
         msg_time_interval: int,
         alarm_time_interval: int,
+        alert_when_ok: bool,
         msg_template: str = "High resource usage level={level}",
     ) -> None:
         assert warning_level < error_level
         assert warning_inc >= 0
         assert error_inc >= 0
-        assert alarm_time_interval >= 0
+        assert alarm_time_interval >= msg_time_interval >= 0
+        # assert alarm_time_interval % msg_time_interval == 0
         self.warning_level = warning_level
         self.error_level = error_level
         self.warning_inc = warning_inc
         self.error_inc = error_inc
         self.alarm_time_interval = alarm_time_interval
         self.msg_time_interval = msg_time_interval
+        self.alert_when_ok = alert_when_ok
         self.msg_template = msg_template
         self._last_msg_time = r_now() - timedelta(seconds=1)
         self._next_msg_time = r_now()
@@ -54,34 +57,41 @@ class Reporter:
 
     def report_level(self, level: float, **kwargs):
         now = r_now()
+        msg = self.msg_template.format(level=level, **kwargs)
 
         # 0 - nothing, 1 - info, 2 - warning, 3 - error
         report_code: int = 0
 
+        # Time to report resource usage (state: ok)
         if now >= self._next_msg_time:
             report_code = 1
 
+        # Report abnormally high resource usage (state: alerting)
         if level >= self.warning_level:
             level_change = level - self._rolling_max_level
             if (
                 (now >= self._next_repeat_alarm_time)
                 or ((level < self.error_level) and (level_change >= self.warning_inc))
                 or ((level >= self.error_level) and (level_change >= self.error_inc))
-                or (
-                    (level < self.error_level)
-                    and (level_change <= -self.warning_inc)
-                    and (now >= self._next_msg_time)
-                )
-                or (
-                    (level >= self.error_level)
-                    and (level_change <= -self.error_inc)
-                    and (now >= self._next_msg_time)
-                )
             ):
                 report_code = 2 if level < self.error_level else 3
                 self._rolling_max_level = level
 
-        msg = self.msg_template.format(level=level, **kwargs)
+        # Report recovery from high to normal resource usage (state: alerting -> ok)
+        elif (
+            self.alert_when_ok
+            and (now >= self._next_msg_time)
+            and (level < self.warning_level)
+            and (self._rolling_max_level > self.warning_level)
+        ):
+            report_code = 2
+            msg += " (ok)"
+            self._rolling_max_level = level
+
+        # Time to reset the max resource usage level
+        elif not self.alert_when_ok and (now >= self._next_repeat_alarm_time):
+            self._rolling_max_level = min(level, self._rolling_max_level)
+
         if report_code == 0:
             logger.debug(msg)
         elif report_code == 1:
@@ -124,6 +134,7 @@ def init_hdd_reporters() -> None:
                 error_inc=config.HDD_ERROR_INC,
                 msg_time_interval=config.MIN_DELAY_SECONDS,
                 alarm_time_interval=config.MAX_DELAY_SECONDS,
+                alert_when_ok=config.ALERT_WHEN_OK,
                 msg_template=(
                     f"hdd space on '{mount_path}': "
                     + "used_pct={level:.1f} used_gb={used_space_gb:.2f} free_gb={free_space_gb:.2f}"
@@ -136,6 +147,7 @@ def init_hdd_reporters() -> None:
                 error_inc=config.HDD_ERROR_INC,
                 alarm_time_interval=config.MAX_DELAY_SECONDS,
                 msg_time_interval=config.MIN_DELAY_SECONDS,
+                alert_when_ok=config.ALERT_WHEN_OK,
                 msg_template=(
                     f"hdd inodes on '{mount_path}': "
                     + "used_pct={level:.1f} used={used_inode:,} free={free_inode:,}"
@@ -153,6 +165,7 @@ def init_ram_reporters() -> None:
         error_inc=config.RAM_ERROR_INC,
         alarm_time_interval=config.MAX_DELAY_SECONDS,
         msg_time_interval=config.MIN_DELAY_SECONDS,
+        alert_when_ok=config.ALERT_WHEN_OK,
         msg_template=(
             "ram vm_used_pct={level:.1f} "
             + "swap_used_pct={swap_used_pct:.1f} "
