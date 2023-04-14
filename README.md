@@ -5,7 +5,7 @@ A simple tool to monitor usage of hard drive space, RAM and CPU
 - Log HDD, RAM and CPU metrics
 - Alert if a metric threshold is breached
 
-Output example:
+Log output example:
 ```console
 dev-local 2023-04-14T08:16:09.793Z INFO: hdd space on '/': used_pct=53.3 used_gb=239.41 free_gb=209.59
 dev-local 2023-04-14T08:16:09.794Z INFO: hdd inodes on '/': used_pct=6.9 used=2,063,996 free=27,910,532
