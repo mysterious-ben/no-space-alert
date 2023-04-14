@@ -1,7 +1,8 @@
 import os
 import time
 from datetime import datetime, timedelta, timezone
-from typing import Dict
+from statistics import fmean
+from typing import Dict, List
 
 import psutil
 import schedule
@@ -15,6 +16,7 @@ init_logger()
 
 hdd_reporters: Dict[str, Dict[str, "Reporter"]] = {}
 ram_reporters: Dict[str, "Reporter"] = {}
+cpu_reporters: Dict[str, "Reporter"] = {}
 
 
 def r_now() -> datetime:
@@ -182,8 +184,26 @@ def init_ram_reporters() -> None:
     )
 
 
+def init_cpu_reporters() -> None:
+    logger.debug("init monitoring cpu")
+    cpu_reporters["cpu"] = Reporter(
+        warning_level=config.CPU_PCT_WARNING,
+        error_level=config.CPU_PCT_ERROR,
+        warning_inc=config.CPU_WARNING_INC,
+        error_inc=config.CPU_ERROR_INC,
+        alarm_time_interval=config.MAX_DELAY_SECONDS,
+        msg_time_interval=config.MIN_DELAY_SECONDS,
+        alert_when_ok=config.ALERT_WHEN_OK,
+        msg_template=(
+            "cpu avg_pct={level:.1f} "
+            + "max_pct={max_pct:.1f} "
+            + "min_pct={min_pct:.1f} "
+            + "all_pct={all_pct}"
+        ),
+    )
+
+
 def report_hdds():
-    # logger.debug("report hdds load...")
     for mount_path, reporters in hdd_reporters.items():
         try:
             # Get disk space and inodes
@@ -206,7 +226,6 @@ def report_hdds():
 
 
 def report_ram():
-    # logger.debug("report ram load...")
     vm = psutil.virtual_memory()
     swap = psutil.swap_memory()
     ram_reporters["ram"].report_level(
@@ -224,12 +243,24 @@ def report_ram():
     )
 
 
+def report_cpu():
+    cpu: List[float] = psutil.cpu_percent(percpu=True)
+    cpu_reporters["cpu"].report_level(
+        level=fmean(cpu),
+        max_pct=max(cpu),
+        min_pct=min(cpu),
+        all_pct=cpu,
+    )
+
+
 def start():
     logger.critical("free disk monitoring service started")
     init_hdd_reporters()
     init_ram_reporters()
+    init_cpu_reporters()
     schedule.every(config.CHECK_PERIOD_SECONDS).seconds.do(report_hdds)
     schedule.every(config.CHECK_PERIOD_SECONDS).seconds.do(report_ram)
+    schedule.every(config.CHECK_PERIOD_SECONDS).seconds.do(report_cpu)
     try:
         # while True:
         #     report_hdds()
