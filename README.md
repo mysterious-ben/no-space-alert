@@ -1,6 +1,10 @@
 # no-space-alert
 A simple tool to monitor usage of hard drive space, RAM and CPU
 
+## Description
+- Log HDD, RAM and CPU metrics
+- Alert if a metric threshold is breached
+
 Output example:
 ```console
 dev-local 2023-04-14T08:16:09.793Z INFO: hdd space on '/': used_pct=53.3 used_gb=239.41 free_gb=209.59
@@ -21,7 +25,7 @@ Clone this GitHub repository.
 
 2. Create and activate a virtual environment
 3. Install dependencies with `pip install -r requirements.txt`
-4. Run script with `bash make start`
+4. Run script with `make start`
 
 ### In a docker
 1. Create and fill in `.env` file (see above)
