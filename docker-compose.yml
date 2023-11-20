@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
   no-space-alert:
@@ -14,6 +14,11 @@ services:
       - ${DOCKER_MOUNT_PATH_1:-/dev/null}:${DOCKER_MOUNT_PATH_1:-/mnt/mount_1}:ro
       - ${DOCKER_MOUNT_PATH_2:-/dev/null}:${DOCKER_MOUNT_PATH_2:-/mnt/mount_2}:ro
     command: ["start"]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "2"
 
 networks:
   default:
